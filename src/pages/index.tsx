@@ -1,5 +1,8 @@
 import type { NextPage } from "next";
+import fs from "fs";
+import path from "path";
 import Layout from "../components/Layout";
+
 const HomePage: NextPage = () => {
   return (
     <Layout>
@@ -9,3 +12,10 @@ const HomePage: NextPage = () => {
 };
 
 export default HomePage;
+export async function getStaticProps() {
+  const files = fs.readdirSync(path.join("posts"));
+  console.log(files);
+  return {
+    props: {},
+  };
+}
