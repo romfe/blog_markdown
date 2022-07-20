@@ -4,21 +4,19 @@ import path from "path";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
-interface PostInterface {
-  frontmatter: {
-    title: string;
-    date: string;
-    excerpt: string;
-    cover_image: string;
-    category: string;
-    author: string;
-    author_image: string;
-  };
-  slug: string;
-}
-
 interface HomePageProps {
-  posts: PostInterface[];
+  posts: {
+    frontmatter: {
+      title: string;
+      date: string;
+      excerpt: string;
+      cover_image: string;
+      category: string;
+      author: string;
+      author_image: string;
+    };
+    slug: string;
+  }[];
 }
 
 const HomePage = ({ posts }: HomePageProps) => {
@@ -57,12 +55,14 @@ export async function getStaticProps() {
 
   return {
     props: {
-      posts: posts.sort((a, b) => {
-        return (
-          new Date(b.frontmatter.date).getTime() -
-          new Date(a.frontmatter.date).getTime()
-        );
-      }),
+      posts: posts
+        .sort((a, b) => {
+          return (
+            new Date(b.frontmatter.date).getTime() -
+            new Date(a.frontmatter.date).getTime()
+          );
+        })
+        .slice(0, 6),
     },
   };
 }

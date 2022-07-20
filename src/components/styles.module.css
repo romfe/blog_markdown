@@ -1,0 +1,27 @@
+.container {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #f3f4f6;
+  border-radius: 0.25rem;
+}
+
+.yellow {
+  background-color: #d97706;
+}
+
+.green {
+  background-color: #059669;
+}
+.blue {
+  background-color: #2563eb;
+}
+
+.red {
+  background-color: #dc2626;
+}
+
+.purple {
+  background-color: #7c3aed;
+}
