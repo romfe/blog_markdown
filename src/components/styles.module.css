@@ -9,19 +9,49 @@
 
 .yellow {
   background-color: #d97706;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #f3f4f6;
+  border-radius: 0.25rem;
 }
 
 .green {
   background-color: #059669;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #f3f4f6;
+  border-radius: 0.25rem;
 }
 .blue {
   background-color: #2563eb;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #f3f4f6;
+  border-radius: 0.25rem;
 }
 
 .red {
   background-color: #dc2626;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #f3f4f6;
+  border-radius: 0.25rem;
 }
 
 .purple {
   background-color: #7c3aed;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #f3f4f6;
+  border-radius: 0.25rem;
 }
