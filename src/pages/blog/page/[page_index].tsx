@@ -1,7 +1,6 @@
 import matter from "gray-matter";
 import fs from "fs";
 import path from "path";
-import Link from "next/link";
 import Layout from "../../../components/Layout";
 import Post from "../../../components/Post";
 import { POSTS_PER_PAGE } from "../../../config";
@@ -19,9 +18,11 @@ interface BlogPageProps {
     };
     slug: string;
   }[];
+  numPages: number;
+  currentPage: number;
 }
 
-const BlogPage = ({ posts }: BlogPageProps) => {
+const BlogPage = ({ posts, numPages, currentPage }: BlogPageProps) => {
   return (
     <Layout>
       <h1 className="text-5xl border-b4 p-5 font-bold">Blog</h1>
@@ -33,10 +34,9 @@ const BlogPage = ({ posts }: BlogPageProps) => {
     </Layout>
   );
 };
-
 export default BlogPage;
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const files = fs.readdirSync(path.join("src/posts"));
   const numPages = Math.ceil(files.length / POSTS_PER_PAGE);
 
@@ -47,14 +47,22 @@ export async function getStaticPaths() {
       params: { page_index: i.toString() },
     });
   }
-  console.log(paths);
   return {
     paths,
     fallback: false,
   };
+};
+
+interface PageIndexParams {
+  page_index: string;
 }
 
-export async function getStaticProps() {
+export const getStaticProps = async ({
+  params,
+}: {
+  params: PageIndexParams;
+}) => {
+  const page = parseInt((params && params.page_index) || "1");
   const files = fs.readdirSync(path.join("src/posts"));
 
   const posts = files.map((filename) => {
@@ -68,14 +76,23 @@ export async function getStaticProps() {
     return { slug, frontmatter };
   });
 
+  const numPages = Math.ceil(files.length / POSTS_PER_PAGE);
+  const pageIndex = page - 1;
+  const orderedPosts = posts.sort((a, b) => {
+    return (
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+    );
+  });
+
   return {
     props: {
-      posts: posts.sort((a, b) => {
-        return (
-          new Date(b.frontmatter.date).getTime() -
-          new Date(a.frontmatter.date).getTime()
-        );
-      }),
+      posts: orderedPosts.slice(
+        pageIndex * POSTS_PER_PAGE,
+        (pageIndex + 1) * POSTS_PER_PAGE
+      ),
+      numPages,
+      currentPage: page,
     },
   };
-}
+};
