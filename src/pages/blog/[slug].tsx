@@ -3,8 +3,8 @@ import matter from "gray-matter";
 import path from "path";
 import Link from "next/link";
 import { marked } from "marked";
-import Layout from "../../components/Layout";
-import CategoryLabel from "../../components/CategoryLabel";
+import Layout from "@/components/Layout";
+import CategoryLabel from "@/components/CategoryLabel";
 
 interface PostsPageProps {
   frontmatter: {

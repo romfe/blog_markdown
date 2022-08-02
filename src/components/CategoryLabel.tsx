@@ -15,8 +15,8 @@ const CategoryLabel = ({ children }: CategoryLabelProps) => {
   };
   return (
     <div
-      //className={`px-2 py-1 bg-${colorKey[children]}-600 text-gray-100 text-bold rounded`}
-      className={styles[colorKey[children]]}
+      className={`px-2 py-1 bg-${colorKey[children]}-600 text-gray-100 text-bold rounded`}
+      //className={styles[colorKey[children]]}
     >
       <Link href={`/blog/category/${children.toLowerCase()}`}>{children}</Link>
     </div>

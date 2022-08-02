@@ -2,8 +2,8 @@ import matter from "gray-matter";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import Layout from "../components/Layout";
-import Post from "../components/Post";
+import Layout from "@/components/Layout";
+import Post from "@/components/Post";
 interface HomePageProps {
   posts: {
     frontmatter: {

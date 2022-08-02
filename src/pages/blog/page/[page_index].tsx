@@ -1,9 +1,10 @@
 import matter from "gray-matter";
 import fs from "fs";
 import path from "path";
-import Layout from "../../../components/Layout";
-import Post from "../../../components/Post";
-import { POSTS_PER_PAGE } from "../../../config";
+import Layout from "@/components/Layout";
+import Post from "@/components/Post";
+import Pagination from "@/components/Pagination";
+import { POSTS_PER_PAGE } from "@/config/index";
 
 interface BlogPageProps {
   posts: {
@@ -31,6 +32,7 @@ const BlogPage = ({ posts, numPages, currentPage }: BlogPageProps) => {
           <Post key={index} post={post} />
         ))}
       </div>
+      <Pagination currentPage={currentPage} numPages={numPages} />
     </Layout>
   );
 };
