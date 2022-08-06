@@ -4,6 +4,7 @@ import path from "path";
 import Link from "next/link";
 import Layout from "@/components/Layout";
 import Post from "@/components/Post";
+import { getPosts } from "@/lib/posts";
 
 interface CategoryBlogPageProps {
   posts: {
@@ -73,18 +74,7 @@ export const getStaticProps = async ({
 }: {
   params: CategoryPageParams;
 }) => {
-  const files = fs.readdirSync(path.join("src/posts"));
-
-  const posts = files.map((filename) => {
-    const slug = filename.replace(".md", "");
-    const markdownWithMeta = fs.readFileSync(
-      path.join("src/posts", filename),
-      "utf-8"
-    );
-
-    const { data: frontmatter } = matter(markdownWithMeta);
-    return { slug, frontmatter };
-  });
+  const posts = getPosts();
 
   //Filter posts by category
   console.log(category_name);
@@ -94,12 +84,7 @@ export const getStaticProps = async ({
 
   return {
     props: {
-      posts: categoryPosts.sort((a, b) => {
-        return (
-          new Date(b.frontmatter.date).getTime() -
-          new Date(a.frontmatter.date).getTime()
-        );
-      }),
+      posts: categoryPosts,
       categoryName: category_name,
     },
   };

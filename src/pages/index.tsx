@@ -1,9 +1,8 @@
-import matter from "gray-matter";
-import fs from "fs";
-import path from "path";
 import Link from "next/link";
+import { getPosts } from "@/lib/posts";
 import Layout from "@/components/Layout";
 import Post from "@/components/Post";
+
 interface HomePageProps {
   posts: {
     frontmatter: {
@@ -40,29 +39,9 @@ const HomePage = ({ posts }: HomePageProps) => {
 export default HomePage;
 
 export async function getStaticProps() {
-  const files = fs.readdirSync(path.join("src/posts"));
-
-  const posts = files.map((filename) => {
-    const slug = filename.replace(".md", "");
-    const markdownWithMeta = fs.readFileSync(
-      path.join("src/posts", filename),
-      "utf-8"
-    );
-
-    const { data: frontmatter } = matter(markdownWithMeta);
-    return { slug, frontmatter };
-  });
-
   return {
     props: {
-      posts: posts
-        .sort((a, b) => {
-          return (
-            new Date(b.frontmatter.date).getTime() -
-            new Date(a.frontmatter.date).getTime()
-          );
-        })
-        .slice(0, 6),
+      posts: getPosts().slice(0, 6),
     },
   };
 }
