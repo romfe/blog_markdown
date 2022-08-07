@@ -4,6 +4,7 @@ import path from "path";
 import Link from "next/link";
 import Layout from "@/components/Layout";
 import Post from "@/components/Post";
+import CategoryList from "@/components/CategoryList";
 import { getPosts } from "@/lib/posts";
 
 interface CategoryBlogPageProps {
@@ -20,16 +21,28 @@ interface CategoryBlogPageProps {
     slug: string;
   }[];
   categoryName: string;
+  categories: string[];
 }
 
-const CategoryBlogPage = ({ posts, categoryName }: CategoryBlogPageProps) => {
+const CategoryBlogPage = ({
+  posts,
+  categoryName,
+  categories,
+}: CategoryBlogPageProps) => {
   return (
     <Layout>
-      <h1 className="text-5xl border-b4 p-5 font-bold">{`Posts em "${categoryName}"`}</h1>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {posts.map((post, index) => (
-          <Post key={index} post={post} />
-        ))}
+      <div className="flex justify-between">
+        <div className="w-3/4 mr-10">
+          <h1 className="text-5xl border-b4 p-5 font-bold">{`Posts em "${categoryName}"`}</h1>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {posts.map((post, index) => (
+              <Post key={index} post={post} />
+            ))}
+          </div>
+        </div>
+        <div className="w-1/4">
+          <CategoryList categories={categories} />
+        </div>
       </div>
       <Link href="/blog">
         <a className="block text-center border border-gray-500 text-gray-800 rounded-md py-4 my-5 transition duration-500 ease select-none hover:text-white hover:bg-gray-900 focus:outline-none focus:shadow-outline w-full">
@@ -76,6 +89,9 @@ export const getStaticProps = async ({
 }) => {
   const posts = getPosts();
 
+  const categories = posts.map((post) => post.frontmatter.category);
+  const uniqueCategories = Array.from(new Set(categories));
+
   //Filter posts by category
   console.log(category_name);
   const categoryPosts = posts.filter(
@@ -86,6 +102,7 @@ export const getStaticProps = async ({
     props: {
       posts: categoryPosts,
       categoryName: category_name,
+      categories: uniqueCategories,
     },
   };
 };

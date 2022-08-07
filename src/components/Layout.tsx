@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Header from "./Header";
+import Search from "./Search";
 
 interface LayoutProps {
   title: string;
@@ -18,6 +19,7 @@ const Layout = ({ title, keywords, description, children }: LayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      <Search />
       <main className="container mx-auto my-7 font-jetbrains">{children}</main>
     </div>
   );
